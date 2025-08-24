@@ -1,0 +1,63 @@
+module MyModule::AIAutopay {
+    use aptos_framework::signer;
+    use aptos_framework::coin;
+    use aptos_framework::aptos_coin::AptosCoin;
+    use aptos_framework::timestamp;
+
+    /// Struct representing an autopay account with AI predictions
+    struct AutopayAccount has store, key {
+        usdt_balance: u64,           // User's USDT balance for autopay
+        predicted_bill: u64,         // AI-predicted next month's bill amount
+        best_conversion_rate: u64,   // Best USDT to INR rate (scaled by 10000)
+        last_payment_timestamp: u64, // Timestamp of last payment
+        is_active: bool,             // Whether autopay is active
+    }
+
+    /// Function to setup autopay account with initial USDT deposit and AI prediction
+    public fun setup_autopay(
+        user: &signer, 
+        initial_usdt: u64, 
+        predicted_monthly_bill: u64
+    ) {
+        let account = AutopayAccount {
+            usdt_balance: initial_usdt,
+            predicted_bill: predicted_monthly_bill,
+            best_conversion_rate: 8200, // Initial rate: 1 USDT = 82.00 INR
+            last_payment_timestamp: timestamp::now_seconds(),
+            is_active: true,
+        };
+        
+        // Transfer USDT from user to contract for autopay
+        let usdt_deposit = coin::withdraw<AptosCoin>(user, initial_usdt);
+        coin::deposit<AptosCoin>(signer::address_of(user), usdt_deposit);
+        
+        move_to(user, account);
+    }
+
+    /// Function to execute AI-triggered autopay when conversion rate is optimal
+    public fun execute_autopay_payment(
+        user_address: address, 
+        current_conversion_rate: u64,
+        actual_bill_amount: u64
+    ) acquires AutopayAccount {
+        let account = borrow_global_mut<AutopayAccount>(user_address);
+        
+        // AI logic: Pay only if current rate is better than stored best rate
+        // and account is active with sufficient balance
+        if (account.is_active && 
+            current_conversion_rate > account.best_conversion_rate &&
+            account.usdt_balance >= actual_bill_amount) {
+            
+            // Calculate USDT needed for INR bill payment
+            let usdt_needed = (actual_bill_amount * 10000) / current_conversion_rate;
+            
+            // Process payment
+            account.usdt_balance = account.usdt_balance - usdt_needed;
+            account.last_payment_timestamp = timestamp::now_seconds();
+            account.best_conversion_rate = current_conversion_rate;
+            
+            // Update AI prediction for next month (simple increment by 5%)
+            account.predicted_bill = (actual_bill_amount * 105) / 100;
+        };
+    }
+}

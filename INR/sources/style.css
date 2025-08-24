@@ -1,0 +1,32 @@
+:root {
+  --primary:#3a86ff;
+  --secondary:#8338ec;
+  --success:#06d6a0;
+  --warning:#ffd166;
+  --danger:#ef476f;
+  --dark:#1a202c;
+  --light:#f8f9fa;
+  --gray:#6c757d;
+  --bg-color:#f0f2f5;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;}
+body{background:var(--bg-color);color:#333;}
+.container{display:flex;min-height:100vh;}
+.sidebar{width:250px;background:linear-gradient(to bottom,var(--primary),var(--secondary));color:white;padding:20px 0;}
+.logo{text-align:center;margin-bottom:10px;}
+.logo h1{font-size:24px;font-weight:700;}
+.logo span{color:var(--warning);}
+.nav-links{list-style:none;}
+.nav-links li{padding:14px 24px;cursor:pointer;}
+.nav-links li:hover{background:rgba(255,255,255,0.1);}
+.nav-links li.active{background:rgba(255,255,255,0.2);}
+.main-content{flex:1;padding:20px;overflow-y:auto;}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
+.btn{padding:8px 14px;border:none;border-radius:6px;cursor:pointer;background:var(--primary);color:white;}
+.btn:hover{opacity:0.9;}
+.card{background:white;padding:16px;border-radius:10px;margin-bottom:20px;box-shadow:0 3px 10px rgba(0,0,0,0.1);}
+.table{width:100%;border-collapse:collapse;}
+.table th,.table td{padding:8px;border-bottom:1px solid #eee;}
+.badge{padding:3px 8px;border-radius:10px;font-size:12px;background:#f0f5ff;color:#3a86ff;}
+.dark-mode{--bg-color:#1e1e1e;--card-bg:#2c2c2c;color:#f8f9fa;}
+.dark-mode .card{background:var(--card-bg);}

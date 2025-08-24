@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoPay - Aptos Blockchain</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <h1>Auto<span>Pay</span></h1>
+        <p>Aptos Blockchain</p>
+      </div>
+      <ul class="nav-links">
+        <li class="active" data-tab="dashboard"><i class="fas fa-home"></i> Dashboard</li>
+        <li data-tab="payment"><i class="fas fa-exchange-alt"></i> USDT → INR</li>
+        <li data-tab="transactions"><i class="fas fa-receipt"></i> On-Chain Records</li>
+        <li data-tab="nft"><i class="fas fa-cube"></i> NFT Receipts</li>
+        <li data-tab="split"><i class="fas fa-users"></i> Bill Splitting</li>
+        <li data-tab="rewards"><i class="fas fa-gift"></i> Rewards</li>
+      </ul>
+    </div>
+
+    <!-- Main -->
+    <div class="main-content">
+      <div class="header">
+        <h2>Aptos AutoPay</h2>
+        <div class="header-actions">
+          <button id="darkModeToggle" class="btn"><i class="fas fa-moon"></i></button>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tab-content active" id="dashboard"></div>
+      <div class="tab-content" id="payment"></div>
+      <div class="tab-content" id="transactions"></div>
+      <div class="tab-content" id="nft"></div>
+      <div class="tab-content" id="split"></div>
+      <div class="tab-content" id="rewards"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
